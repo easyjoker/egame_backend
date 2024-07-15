@@ -15,5 +15,6 @@ func main() {
 	}
 
 	r := server.SetupRouter()
+
 	r.Run(fmt.Sprintf(":%s", config.Port))
 }

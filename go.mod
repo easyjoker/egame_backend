@@ -1,10 +1,11 @@
-module egamebackend
+module egame_backend
 
 go 1.22.4
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gorilla/websocket v1.5.3
+	github.com/easyjoker/egame_core v0.0.1
 )
 
 require (
@@ -36,3 +37,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/easyjoker/egame_core => d:/Projects/go/egame_core
