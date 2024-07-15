@@ -1,20 +1,20 @@
 package main
 
 import (
-	"egamebackend/server"
+	"egame_backend/server"
 	"fmt"
 	"log"
+	"os"
 
-	"egamebackend/config"
+	c "github.com/easyjoker/egame_core/config"
 )
 
 func main() {
-	config, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalf("Could not load config: %v", err)
-	}
+	c.Init("config.yaml")
 
+	config := c.GetConfig()
+	log.SetOutput(os.Stdout)
 	r := server.SetupRouter()
 
-	r.Run(fmt.Sprintf(":%s", config.Port))
+	r.Run(fmt.Sprintf(":%s", config.Server.Port))
 }
