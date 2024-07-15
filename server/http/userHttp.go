@@ -23,7 +23,7 @@ func CreatePlayerHandler(c *gin.Context) {
 		return
 	}
 
-	result, err := p.NewPlayer(nil, player.Account, player.Password, player.Name, 1000)
+	result, err := p.NewPlayer(player.Account, player.Password, player.Name, 1000)
 	if err != nil {
 		log.Printf("NewPlayer error: %v", err)
 		c.JSON(500, gin.H{"error": "Internal server error"})
@@ -49,7 +49,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	result, err := p.LoginPlayer(nil, player.Account, player.Password)
+	result, err := p.LoginPlayer(player.Account, player.Password)
 
 	if err != nil {
 		log.Printf("Login error: %v", err)
