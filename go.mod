@@ -4,6 +4,7 @@ go 1.22.4
 
 require (
 	github.com/easyjoker/egame_core v0.0.1
+	github.com/easyjoker/pokers v0.0.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gorilla/websocket v1.5.3
 )
@@ -47,3 +48,5 @@ require (
 )
 
 replace github.com/easyjoker/egame_core => d:/Projects/go/egame_core
+
+replace github.com/easyjoker/pokers => d:/Projects/go/pokers

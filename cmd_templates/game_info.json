@@ -1,0 +1,6 @@
+{
+    "type": "lobby",
+    "data": {
+        "command_type": "get_tables"
+    }
+}

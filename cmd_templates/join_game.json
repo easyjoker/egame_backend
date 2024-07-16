@@ -1,0 +1,10 @@
+{
+    "type": "table",
+    "data": {
+        "command_type": "join_game",
+        "table_id": 1,
+        "game_command": {
+            "code": 1
+        }
+    }
+}

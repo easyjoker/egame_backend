@@ -71,9 +71,13 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 						continue
 					}
 					// 註冊玩家Id
-					playerId := message.Data.(float64)
-					clients[conn].SavePlayerId(uint64(playerId))
-					log.Printf("[%d]:Connection [%s] registered\n", uint64(playerId), conn.RemoteAddr().Network())
+					playerId, ok := message.Data.(float64)
+					if !ok {
+						log.Printf("Could not register connection: invalid player id\n")
+						continue
+					}
+					clients[conn].SavePlayerId(int64(playerId))
+					log.Printf("[%d]:Connection [%s] registered\n", int64(playerId), conn.RemoteAddr().Network())
 					conn.WriteJSON(Message[interface{}]{Type: "register", Data: "success"})
 					continue
 				}
@@ -86,6 +90,23 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 				}
 				log.Printf("收到信息： %v,將資料往後送到遊戲處理去\n", message)
 				conn.WriteJSON(Message[interface{}]{Type: "received", Data: "command received"})
+				c := clients[conn]
+				HandleGameCmd(c.PlayerId, &c.Channel, &message.Type, message.Data)
+			}
+		}
+	}()
+
+	// 啟動一個新的 goroutine 來發送信息到用戶端
+	go func() {
+		for {
+			select {
+			case message := <-clients[conn].Channel:
+				log.Printf("發送信息給用戶端：%v\n", message)
+				err := conn.WriteJSON(message)
+				if err != nil {
+					log.Printf("Could not send message: %v\n", err)
+					return
+				}
 			}
 		}
 	}()

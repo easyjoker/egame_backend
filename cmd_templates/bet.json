@@ -1,0 +1,10 @@
+{
+    "type": "table",
+    "data": {
+        "table_id": 1,
+        "game_command": {
+            "code": 3,
+            "amount": 50
+        }
+    }
+}

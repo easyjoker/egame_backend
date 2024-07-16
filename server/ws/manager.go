@@ -11,9 +11,11 @@ type Connection struct {
 	// 這個連接的websocket
 	Conn *websocket.Conn
 	// 這個連接的玩家Id
-	PlayerId uint64
+	PlayerId int64
 	// 最後一次收到訊息的時間
 	LastMessageTime int64
+	// 用來發送訊息的channel
+	Channel chan string
 }
 
 // NewConnection 用來創建一個新的連接
@@ -21,10 +23,11 @@ func NewConnection(conn *websocket.Conn) *Connection {
 	return &Connection{
 		Conn:            conn,
 		LastMessageTime: time.Now().Unix(),
+		Channel:         make(chan string),
 	}
 }
 
-func (c *Connection) SavePlayerId(playerId uint64) {
+func (c *Connection) SavePlayerId(playerId int64) {
 	c.PlayerId = playerId
 	c.LastMessageTime = time.Now().Unix()
 }
