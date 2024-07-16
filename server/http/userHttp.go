@@ -2,6 +2,7 @@ package http
 
 import (
 	"log"
+	"strconv"
 
 	p "github.com/easyjoker/egame_core/player"
 	"github.com/gin-gonic/gin"
@@ -58,4 +59,32 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	c.JSON(200, result)
+}
+
+// add player money
+func AddMoneyHandler(c *gin.Context) {
+	id, parseErr := strconv.ParseInt(c.Param("id"), 10, 64)
+	if parseErr != nil {
+		log.Printf("ParseInt error: %v", parseErr)
+		c.JSON(400, gin.H{"error": "Invalid request data"})
+		return
+	}
+
+	money, amountErr := strconv.ParseFloat(c.PostForm("amount"), 64)
+
+	if amountErr != nil {
+		log.Printf("ParseFloat error: %v", amountErr)
+		c.JSON(400, gin.H{"error": "Invalid request data"})
+		return
+	}
+
+	err := p.AddPlayerBalance(id, money)
+
+	if err != nil {
+		log.Printf("AddMoney error: %v", err)
+		c.JSON(500, gin.H{"error": "Internal server error"})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "success"})
 }
