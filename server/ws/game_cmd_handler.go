@@ -8,7 +8,7 @@ import (
 )
 
 // 處理用戶送上來的命令
-func HandleGameCmd(playerId int64, channel *chan string, cmd_type *string, cmd interface{}) {
+func HandleGameCmd(playerId int64, channel *chan interface{}, cmd_type *string, cmd interface{}) {
 	// 將命令轉發給遊戲服務器
 	l := lobby.GetHome()
 	c := CheckCmd(cmd)

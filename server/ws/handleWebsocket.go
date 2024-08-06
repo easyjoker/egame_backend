@@ -78,6 +78,7 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 					}
 					clients[conn].SavePlayerId(int64(playerId))
 					log.Printf("[%d]:Connection [%s] registered\n", int64(playerId), conn.RemoteAddr().Network())
+
 					conn.WriteJSON(Message[interface{}]{Type: "register", Data: "success"})
 					continue
 				}

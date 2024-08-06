@@ -4,6 +4,7 @@ import (
 	"log"
 	"strconv"
 
+	core "github.com/easyjoker/egame_core"
 	p "github.com/easyjoker/egame_core/player"
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +32,7 @@ func CreatePlayerHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, result)
+	c.JSON(200, gin.H{"code": core.Success, "data": result})
 }
 
 // 用戶登入
@@ -54,11 +55,10 @@ func LoginHandler(c *gin.Context) {
 
 	if err != nil {
 		log.Printf("Login error: %v", err)
-		c.JSON(500, gin.H{"error": "Internal server error"})
+		c.JSON(200, err)
 		return
 	}
-
-	c.JSON(200, result)
+	c.JSON(200, gin.H{"code": core.Success, "data": result})
 }
 
 // add player money
@@ -86,5 +86,5 @@ func AddMoneyHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "success"})
+	c.JSON(200, gin.H{"code": core.Success, "data": "Add money success"})
 }

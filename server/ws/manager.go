@@ -15,7 +15,7 @@ type Connection struct {
 	// 最後一次收到訊息的時間
 	LastMessageTime int64
 	// 用來發送訊息的channel
-	Channel chan string
+	Channel chan interface{}
 }
 
 // NewConnection 用來創建一個新的連接
@@ -23,7 +23,7 @@ func NewConnection(conn *websocket.Conn) *Connection {
 	return &Connection{
 		Conn:            conn,
 		LastMessageTime: time.Now().Unix(),
-		Channel:         make(chan string),
+		Channel:         make(chan interface{}),
 	}
 }
 
